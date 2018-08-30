@@ -397,6 +397,9 @@ ggplot(data = sessions, aes(x = status, y = Total,
 
 # so since classification takes two factors lets transform our sessions into two levels, 1 - difficuilt(extremely difficult and very difficult), 0 - (somewhat difficult and Not difficult at all)
 
-for (each_val in phq9_data$status) {
+# changing status column as character not factor
+phq9_data$status <- as.character(phq9_data$status)
+
+for (each_val in phq9_data[ ,15]) {
   if(each_val == "Not Difficult at All")  gsub("Not Difficult at All" , 0 , phq9_data[,15] )
 }
