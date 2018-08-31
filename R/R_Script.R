@@ -1,23 +1,3 @@
-# METHODOLOGY FOR THIS PROJECT
-
-# 1. Defining the goal of the project
-# 2. Preparing the data and data exploration
-# 3. Training and testing the model 
-# 4. Evaluating the performance of the model
-# 5. Documentation and presentation
-
-# GOAL OF THE PROJECT
-
-# Our goal is to understand patterns and conditions in order to predict possible client's status in the next visit
-
-# Some of the Insights and questions to look at are:
-
-# 1. How long is PHQ administration and Recieving Time in days, how was it in relation to the condition of the clients
-# 2. what is the session number distribution, is it decremental from session1 to session 12 as expected or we have left some clients of time
-# 3. which day(s) are our field officers on average busy in the field, which day(s) can we utilize them well at the office
-# 4. How is the distribution of; No_pleasure_doing_anything,Feeling_sad__depressed_or_hopeless,Trouble_sleeping,Feeling_tired_or_little_energy, Poor_appetite_or_over_eating, self_guilt, Trouble_concentrating, Moving_or_speaking_slowly, Sucide_Thoughts
-# 5. How is our response variable distributed 
-# 6. Much other insights could further be got but that is it for  now
 
 # Loading Packages to use in the project
 library(dplyr)
@@ -400,6 +380,14 @@ ggplot(data = sessions, aes(x = status, y = Total,
 # changing status column as character not factor
 phq9_data$status <- as.character(phq9_data$status)
 
-for (each_val in phq9_data[ ,15]) {
-  if(each_val == "Not Difficult at All")  gsub("Not Difficult at All" , 0 , phq9_data[,15] )
-}
+phq9_data$status <- (sub("Somewhat Difficult","Not Difficult at All",phq9_data[,15]))
+phq9_data$status <- (sub("Very Difficult","Extremely Difficult",phq9_data[,15]))
+
+# Tried it with a for loop but it took 7.26 - 8 mins to finish running
+
+# we take back the status column to factors
+
+phq9_data$status <- as.factor(phq9_data$status)
+
+str(phq9_data$status)
+
